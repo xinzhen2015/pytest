@@ -141,3 +141,8 @@ PYTEST_TMPDIR/test_needsfiles0
 1 failed in 0.12 seconds
 ```
 更多有关tmpdir的处理参见[临时目录和文件](https://docs.pytest.org/en/latest/tmpdir.html#tmpdir-handling)。
+
+用以下命令可找到pytest存在哪些内置fixtures：
+```
+pytest --fixtures   # shows builtin and custom fixtures
+```
