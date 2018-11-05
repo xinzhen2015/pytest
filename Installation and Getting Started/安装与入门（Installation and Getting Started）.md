@@ -79,3 +79,17 @@ $ pytest -q test_sysexit.py
 .                                                                    [100%]
 1 passed in 0.12 seconds
 ```
+## 1.5 在类里面执行多个测试
+***
+当你写了多个测试用例后，你希望用一个类把他们组合起来。pytest可以非常简单的创建一个包含很多测试的类。
+```python
+# content of test_class.py
+class TestClass(object):
+    def test_one(self):
+        x = "this"
+        assert 'h' in x
+
+    def test_two(self):
+        x = "hello"
+        assert hasattr(x, 'check')
+```
