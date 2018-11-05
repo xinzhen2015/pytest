@@ -146,3 +146,8 @@ PYTEST_TMPDIR/test_needsfiles0
 ```
 pytest --fixtures   # shows builtin and custom fixtures
 ```
+```
+注意：
+
+除非添加了-v选项，否则该命令将省略带有前导_的fixture。
+```
