@@ -60,3 +60,22 @@ test_sample.py:5: AssertionError
 ## 1.3 运行多个测试
 ***
 pytest会运行当前目录及其子目录中命名为test_*.py 或者 *_test.py的所有文件。一般来讲，pytest遵循[标准的测试规则](https://docs.pytest.org/en/latest/goodpractices.html#test-discovery)。
+## 1.4 断言引发某个异常
+***
+运用引发助手去断言某些代码会引发异常：
+```python
+# content of test_sysexit.py
+import pytest
+def f():
+    raise SystemExit(1)
+
+def test_mytest():
+    with pytest.raises(SystemExit):
+        f()
+```
+用简洁模式执行测试函数：
+```
+$ pytest -q test_sysexit.py
+.                                                                    [100%]
+1 passed in 0.12 seconds
+```
