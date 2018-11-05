@@ -41,7 +41,8 @@ pytest test_mod.py
 ```
 pytest testing/
 ```
-以关键字表示的方式执行：
+以关键字表述的方式执行：
 ```
 pytest -k "MyClass and not method"
 ```
+这种方式会去匹配给定的字符表述去执行测试，字符表述包括
