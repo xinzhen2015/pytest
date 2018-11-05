@@ -112,3 +112,32 @@ test_class.py:8: AssertionError
 1 failed, 1 passed in 0.12 seconds
 ```
 第一个测试通过，第二个测试失败。我们可以很轻松的看到断言执行过程中的值，进而帮助我们知道错误的原因。
+## 1.6 为公能测试请求一个独一无二的的临时文件夹
+
+pytest提供了内置fixture和函数参数，可以请求任意资源，比如说请求一个唯一的临时目录:
+```python
+# content of test_tmpdir.py
+def test_needsfiles(tmpdir):
+    print (tmpdir)
+    assert 0
+```
+在测试函数签名中列出tmpdir（临时文件夹）的名称，pytest将查找并调用fixture工厂，以便在调用执行测试函数之前创建资源。在测试运行之前，pytest创建了一个供每个测试调用的临时目录:
+```
+$ pytest -q test_tmpdir.py
+F                                                                    [100%]
+================================= FAILURES =================================
+_____________________________ test_needsfiles ______________________________
+
+tmpdir = local('PYTEST_TMPDIR/test_needsfiles0')
+
+    def test_needsfiles(tmpdir):
+        print (tmpdir)
+>       assert 0
+E       assert 0
+
+test_tmpdir.py:3: AssertionError
+--------------------------- Captured stdout call ---------------------------
+PYTEST_TMPDIR/test_needsfiles0
+1 failed in 0.12 seconds
+```
+更多有关tmpdir的处理参见[临时目录和文件](https://docs.pytest.org/en/latest/tmpdir.html#tmpdir-handling)。
