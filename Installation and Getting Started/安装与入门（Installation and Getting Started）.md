@@ -93,3 +93,21 @@ class TestClass(object):
         x = "hello"
         assert hasattr(x, 'check')
 ```
+pytest将会依据python测试发觉的约定找到所有测试，所以ta找到了两个test_为前缀的函数。我们可以很简单的通过传递文件名去执行模块。
+```
+$ pytest -q test_class.py
+.F                                                                   [100%]
+================================= FAILURES =================================
+____________________________ TestClass.test_two ____________________________
+
+self = <test_class.TestClass object at 0xdeadbeef>
+
+    def test_two(self):
+        x = "hello"
+>       assert hasattr(x, 'check')
+E       AssertionError: assert False
+E        +  where False = hasattr('hello', 'check')
+
+test_class.py:8: AssertionError
+1 failed, 1 passed in 0.12 seconds
+```
