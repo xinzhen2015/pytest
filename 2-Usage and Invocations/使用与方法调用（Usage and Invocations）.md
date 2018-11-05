@@ -17,3 +17,31 @@ python -m pytest [...]
 退出码 4：命令用法错误。
 退出码 5：没有收集到测试用例。
 ```
+## 2.3 获取版本、名字选项，环境变量
+```
+pytest --version   # shows where pytest was imported from
+pytest --fixtures  # show available builtin function arguments
+pytest -h | --help # show help on command line and config file options
+```
+## 2.4 在第几个失败时停止
+
+在出现第一个失败或者第N个失败时停止测试：
+```
+pytest -x            # stop after first failure
+pytest --maxfail=2    # stop after two failures
+```
+## 2.5 指定测试、选择测试
+
+pytest支持以下几种方式去执行和选择测试:  
+以模块为单位执行：
+```
+pytest test_mod.py
+```
+以文件夹为单位执行：
+```
+pytest testing/
+```
+以关键字表示的方式执行：
+```
+pytest -k "MyClass and not method"
+```
