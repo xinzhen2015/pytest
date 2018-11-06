@@ -123,3 +123,39 @@ p - passed
 P - passed with output
 a - all except pP
 ```
+
+字符可以混合使用，例如，只看失败和跳过的测试：
+```
+$ pytest -rfs
+=========================== test session starts ============================
+platform linux -- Python 3.x.y, pytest-3.x.y, py-1.x.y, pluggy-0.x.y
+rootdir: $REGENDOC_TMPDIR, inifile:
+collected 0 items
+
+======================= no tests ran in 0.12 seconds =======================
+```
+
+## 2.8 测试失败时切换到Python调试器（PDB）
+
+Python内置了一个调试器叫[PDB](https://docs.python.org/3/library/pdb.html)。pytest允许通过命令行模式进入PDB。
+```
+pytest --pdb
+```  
+
+一旦使用了这个参数，当用例失败或者键盘打断的时候将会调用PDB。通常来说，你可能只会想要在第一次出现错误的时候用到这个参数，以便定位到错误的原因。
+
+```
+pytest -x --pdb   # drop to PDB on first failure, then end test session
+pytest --pdb --maxfail=3  # drop to PDB for first three failures   前三个失败进入PDB
+```
+
+值得注意的是任何测试失败的异常信息都会存储在sys.last_value, sys.last_type，sys.last_traceback，在Python的命令行交互模式中，允许使用任何调试
+工具进行后期调试。也可以手动的取出异常信息。举个例子：
+```pyhon
+>>> import sys
+>>> sys.last_traceback.tb_lineno
+42
+>>> sys.last_value
+AssertionError('assert result == "ok"',)
+```
+
