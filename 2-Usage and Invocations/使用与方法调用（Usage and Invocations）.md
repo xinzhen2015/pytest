@@ -45,4 +45,25 @@ pytest testing/
 ```
 pytest -k "MyClass and not method"
 ```
-这种方式会去匹配给定的字符表述去执行测试，字符表述包括
+这种方式会去匹配给定的字符表述去执行测试，字符表述包括使用文件名、类名、函数名作为变量的Python操作符。上面命令行中的例子，pytest会执行TestMyClass.test_something，而不会执行TestMyClass.test_method_simple。
+## 2.6 通过NodeID运行测试
+***
+每一个被收集起来的测试用例都会被指定一个唯一的NodeID，NodeID组成由模块全名加说明符（::），以及后面跟随着类名、函数名、参数化的参数。
+
+执行一个模块内的特定测试：
+```
+pytest test_mod.py::test_func
+```
+另外一个例子：有class的情况下执行特定的测试
+```
+pytest test_mod.py::TestClass::test_method
+```
+## 2.7 通过标记表达式运行测试
+```
+pytest -m slow
+```
+上面的命令会执行被装饰器@pytest.mark.slow装饰过的所有测试。
+
+更多信息请参看[标记表达](https://docs.pytest.org/en/latest/mark.html#mark)
+
+## 2.8 从包里运行测试
