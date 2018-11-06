@@ -33,21 +33,22 @@ pytest --maxfail=2    # stop after two failures
 ## 2.5 指定测试、选择测试
 
 pytest支持以下几种方式去执行和选择测试:  
-以模块为单位执行：
+
+2.5.1 以模块为单位执行：
 ```
 pytest test_mod.py
 ```
-以文件夹为单位执行：
+2.5.2 以文件夹为单位执行：
 ```
 pytest testing/
 ```
-以关键字表述的方式执行：
+2.5.3 以关键字表述的方式执行：
 ```
 pytest -k "MyClass and not method"
 ```
 这种方式会去匹配给定的字符表述去执行测试，字符表述包括使用文件名、类名、函数名作为变量的Python操作符。上面命令行中的例子，pytest会执行TestMyClass.test_something，而不会执行TestMyClass.test_method_simple。
 
-通过NodeID运行测试
+2.5.4 通过NodeID运行测试
 
 每一个被收集起来的测试用例都会被指定一个唯一的NodeID，NodeID组成由模块全名加说明符（::），以及后面跟随着类名、函数名、参数化的参数。
 
@@ -59,7 +60,7 @@ pytest test_mod.py::test_func
 ```
 pytest test_mod.py::TestClass::test_method
 ```
-通过标记表达式运行测试
+2.5.5 通过标记表达式运行测试
 ```
 pytest -m slow
 ```
@@ -67,7 +68,7 @@ pytest -m slow
 
 更多信息请参看[标记表达](https://docs.pytest.org/en/latest/mark.html#mark)
 
-从包里运行测试
+2.5.6 从包里运行测试
 ```
 pytest --pyargs pkg.testing
 ```
