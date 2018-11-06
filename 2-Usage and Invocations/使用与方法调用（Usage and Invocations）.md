@@ -108,3 +108,18 @@ collected 0 items
 
 ======================= no tests ran in 0.12 seconds =======================
 ````
+
+参数 -r 后面可以跟一些字符，例如 -ra, a表示报告除了通过的测试之外的失败的测试结果。
+
+下面是可用的字符：
+
+```
+f - failed
+E - error
+s - skipped
+x - xfailed
+X - xpassed
+p - passed
+P - passed with output
+a - all except pP
+```
