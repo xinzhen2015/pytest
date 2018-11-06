@@ -159,3 +159,16 @@ pytest --pdb --maxfail=3  # drop to PDB for first three failures   前三个失�
 AssertionError('assert result == "ok"',)
 ```
 
+## 2.9 在测试开始的时候就进入PDB（Python调试器）
+pytest在每次测试开始的时候立即进入PDB模式：
+```
+pytest --trace
+```
+上面的参数会在每个测试用例开始的时候调用Python调试器。
+
+## 2.10 设置断点
+在本地脚本里import pdb，然后设置断点，pdb.set_trace()在代码里可以被调用，pytest会自动禁用该测试的输出捕获：
+
+※ 其他测试中的输出捕获不受影响。
+※ 任何已经被捕获的测试输出以及将要被这样处理。
+※ 在同一个测试中生成的任何后续输出都不会被捕获，而是直接发送给sys.stdout。需要注意的是，即使在退出交互式PDB模式后，继续执行的常规测试的输出也会发送给sys.stdout。
