@@ -75,7 +75,7 @@ pytest --pyargs pkg.testing
 
 上面命令将会导入pkg.testing，使用它的文件系统所在的位置寻找并运行测试。
 
-## 2.6 改在Python打印记录
+## 2.6 改造Python打印记录
 
 列子： 
 ```
@@ -90,3 +90,5 @@ pytest --tb=line    # only one line per failure
 pytest --tb=native  # Python standard library formatting
 pytest --tb=no      # no traceback at all
 ```
+使用参数 --full-trace，当出现错误时会产生大量log（比参数--tb=long产生的log还要多）。这个参数也确保了在KeyboardInterrupt（Ctrl + C）模块中打印堆栈记录。当测试运行时间比较长的时候，可以使用 Ctrl + C 打断测试，并找到测试在哪挂掉了，这样来说，使用参数还是很有用的。默认情况下键盘打断测试执行后将没有输出展示（因为键盘打断被pytest捕获到了。）当使用这些选项的时候，堆栈记录确保会显示。
+
