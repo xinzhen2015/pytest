@@ -92,3 +92,19 @@ pytest --tb=no      # no traceback at all
 ```
 使用参数 --full-trace，当出现错误时会产生大量log（比参数--tb=long产生的log还要多）。这个参数也确保了在KeyboardInterrupt（Ctrl + C）模块中打印堆栈记录。当测试运行时间比较长的时候，可以使用 Ctrl + C 打断测试，并找到测试在哪挂掉了，这样来说，使用参数还是很有用的。默认情况下键盘打断测试执行后将没有输出展示（因为键盘打断被pytest捕获到了。）当使用这些选项的时候，堆栈记录确保会显示。
 
+## 2.7 详细的总结报告
+***
+版本2.9更新  
+
+当执行完测试的时候，-r 参数可以展示测试的概要结果，这样一来，当执行大型测试套件的时候，失败的用例，跳过的用例，xfails的用例等等都一目了然。  
+
+举个例子：  
+```
+$ pytest -ra
+=========================== test session starts ============================
+platform linux -- Python 3.x.y, pytest-3.x.y, py-1.x.y, pluggy-0.x.y
+rootdir: $REGENDOC_TMPDIR, inifile:
+collected 0 items
+
+======================= no tests ran in 0.12 seconds =======================
+````
