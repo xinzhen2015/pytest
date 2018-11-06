@@ -74,3 +74,19 @@ pytest --pyargs pkg.testing
 ```
 
 上面命令将会导入pkg.testing，使用它的文件系统所在的位置寻找并运行测试。
+
+## 2.6 改在Python打印记录
+
+列子： 
+```
+pytest --showlocals # show local variables in tracebacks
+pytest -l           # show local variables (shortcut)
+
+pytest --tb=auto    # (default) 'long' tracebacks for the first and last
+                     # entry, but 'short' style for the other entries
+pytest --tb=long    # exhaustive, informative traceback formatting
+pytest --tb=short   # shorter traceback format
+pytest --tb=line    # only one line per failure
+pytest --tb=native  # Python standard library formatting
+pytest --tb=no      # no traceback at all
+```
