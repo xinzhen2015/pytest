@@ -269,4 +269,67 @@ def test_function(record_xml_attribute):
     print("hello world")
     assert True
 ```
+与record_property不同的是，使用record_xml_attribute不会增加子元素，而是在生成的测试用例tag里增加一个属性assertions="REQ-1234"，覆盖默认的classname数据：
+```
+<testcase classname="custom_classname" file="test_function.py" line="0" name="test_function" time="0.003" assertions="REQ-1234">
+    <system-out>
+        hello world
+    </system-out>
+</testcase>
+```
+警告：
+```
+record_xml_attribute是一个实验性的特性，在未来的版本中，它的接口可能会被更强大更通用的东西所取代。然而，功能本身将被保留。  
 
+在使用ci工具解析xml报告时，使用这个上面的record_xml_property会有所帮助。然而，有些解析器对于允许的元素和属性非常严格。许多工具使用xsd模式(如下面的示例)来验证传入的xml。  
+
+确保使用的解析器可以识别你使用的属性名。
+```
+一下的方案是使用Jenkins验证XML报告：
+```
+<xs:element name="testcase">
+    <xs:complexType>
+        <xs:sequence>
+            <xs:element ref="skipped" minOccurs="0" maxOccurs="1"/>
+            <xs:element ref="error" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="failure" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="system-out" minOccurs="0" maxOccurs="unbounded"/>
+            <xs:element ref="system-err" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="assertions" type="xs:string" use="optional"/>
+        <xs:attribute name="time" type="xs:string" use="optional"/>
+        <xs:attribute name="classname" type="xs:string" use="optional"/>
+        <xs:attribute name="status" type="xs:string" use="optional"/>
+    </xs:complexType>
+</xs:element>
+
+```
+2.13.4 LogXML: add_global_property
+
+版本3.0更新。
+
+如果您想在testsuite级别添加一个属性节点，它可能包含与所有测试用例相关的属性，那么可以使用LogXML.add_global_properties。
+```python
+import pytest
+
+
+@pytest.fixture(scope="session")
+def log_global_env_facts(f):
+
+    if pytest.config.pluginmanager.hasplugin("junitxml"):
+        my_junit = getattr(pytest.config, "_xml", None)
+
+    my_junit.add_global_property("ARCH", "PPC")
+    my_junit.add_global_property("STORAGE_TYPE", "CEPH")
+
+
+@pytest.mark.usefixtures(log_global_env_facts.__name__)
+def start_and_prepare_env():
+    pass
+
+
+class TestMe(object):
+    def test_foo(self):
+        assert True
+```
