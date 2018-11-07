@@ -174,11 +174,44 @@ pytest --trace
 ※ 在同一个测试中生成的任何后续输出都不会被捕获，而是直接发送给sys.stdout。需要注意的是，即使在退出交互式PDB模式后，继续执行的常规测试的输出也会发送给sys.stdout。
 ## 2.11 内置断点的使用
 
-Python在版本3.7引入内置的breakpoint()功能。Pytest支持在以下行为中使用breakpoint()：
-※ 当调用breakpoint()并且把PYTHONBREAKPOINT设置为默认值的时候，pytest将会使用定制的PDB记录UI，而不是系统默认的PDB。
-※ 当测试完成后，系统将会默认的回到系统之前的PDB记录UI。
-※ 当参数 --pdb 被使用执行的时候，自定义的PDB将会用在breakpoint()以及失败、未处理的测试用例上。
-※ 当使用参数 --pdbcls 的时候，一旦测试失败则调试类就会被执行。但是，当breakpoint()在测试用例内部调用的时候，定制的调试类将会被实例化。
+Python在版本3.7引入内置的breakpoint()功能。Pytest支持在以下行为中使用breakpoint()：  
+※ 当调用breakpoint()并且把PYTHONBREAKPOINT设置为默认值的时候，pytest将会使用定制的PDB记录UI，而不是系统默认的PDB。  
+※ 当测试完成后，系统将会默认的回到系统之前的PDB记录UI。  
+※ 当参数 --pdb 被使用执行的时候，自定义的PDB将会用在breakpoint()以及失败、未处理的测试用例上。  
+※ 当使用参数 --pdbcls 的时候，一旦测试失败则调试类就会被执行。但是，当breakpoint()在测试用例内部调用的时候，定制的调试类将会被实例化。  
 
-## 
+## 2.12 分析测试执行时长
+
+获取执行时间最长的10个测试用例：
+```
+pytest --durations=10
+```
+Pytest默认不展示执行时间太短（<0.01s）的测试用例，除非加上参数 -vv。
+
+## 2.13 创建JUnitXML格式的文件
+
+2.13.1 生成的结果文件可以被Jenkins或者其他的持续集成工具读取，用法：
+```
+pytest --junitxml=path
+```
+在指定路径上生成xml文件。  
+
+版本3.1更新。
+
+当想要设置测试套件生成的xml文件名时，你可以在配置文件里使用junit_suite_name选项：
+```
+[pytest]
+junit_suite_name = my_suite
+```
+2.13.2 属性记录  
+
+版本2.8更新。
+
+在版本3.5里有更改，夹具名从record_xml_property改为record_property，并且作为用户属性所有的报告都可以访问。record_xml_property已经被弃用了。
+如果你想获得测试额外的log信息，你可以使用record_property夹具：
+```python
+def test_function(record_property):
+    record_property("example_key", 1)
+    assert True
+```
 
