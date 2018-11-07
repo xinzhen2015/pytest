@@ -410,3 +410,12 @@ class MyPlugin(object):
 
 pytest.main(["-qq"], plugins=[MyPlugin()])
 ```
+运行它将显示添加了插件MyPlugin并调用了它的钩子:
+```
+$ python myinvoke.py
+.                                                                    [100%]*** test run reporting finishing
+```
+注意：
+```
+调用pytest.main()将会导入测试和它们导入的任何模块。由于python导入系统的缓存机制，从同一进程中对pytest.main()进行后续调用不会反映调用之间对这些文件的更改。因此，不建议从同一个进程(例如，为了重新运行测试)多次调用pytest.main()。
+```
