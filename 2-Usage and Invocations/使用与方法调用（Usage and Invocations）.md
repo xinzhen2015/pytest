@@ -214,4 +214,22 @@ def test_function(record_property):
     record_property("example_key", 1)
     assert True
 ```
+这将会在测试用例tag里增加一条额外的属性，例如example_key="1"：
+```
+<testcase classname="test_function" file="test_function.py" line="0" name="test_function" time="0.0009">
+  <properties>
+    <property name="example_key" value="1" />
+  </properties>
+</testcase>
+```
+或者，你也可以将此功能与自定义标记集成:
+```
+# content of conftest.py
 
+
+def pytest_collection_modifyitems(session, config, items):
+    for item in items:
+        for marker in item.iter_markers(name="test_id"):
+            test_id = marker.args[0]
+            item.user_properties.append(("test_id", test_id))
+```
