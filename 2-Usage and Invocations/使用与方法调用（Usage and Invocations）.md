@@ -333,3 +333,30 @@ class TestMe(object):
     def test_foo(self):
         assert True
 ```
+这将向生成的xml中添加testsuite节点下的子节点:
+```
+<testsuite errors="0" failures="0" name="pytest" skips="0" tests="1" time="0.006">
+  <properties>
+    <property name="ARCH" value="PPC"/>
+    <property name="STORAGE_TYPE" value="CEPH"/>
+  </properties>
+  <testcase classname="test_me.TestMe" file="test_me.py" line="16" name="test_foo" time="0.000243663787842"/>
+</testsuite>
+```
+警告：
+```
+add_global_property是一个实验性的特性，在未来的版本中，它的接口可能会被更强大更通用的东西所取代。然而，功能本身将被保留。  
+```
+## 2.14 生产结果文件  
+
+从版本3.0开始弃用，--resultlog 很少被使用，安排在4.0中移除。  
+
+对于仍然需要类似功能的用户，另一种选择是使用[pytest-tap](https://pypi.org/project/pytest-tap/)插件，它提供测试数据流。  
+
+如果你有任何顾虑，请不要犹豫，立即提issue。
+
+生成一个机器可读的纯文本文件：
+```
+pytest --resultlog=path
+```
+并查看路径位置的内容。例如，经过几个版本的修订，[PyPy-test](http://buildbot.pypy.org/summary) 网页使用这些文件来显示测试结果。
