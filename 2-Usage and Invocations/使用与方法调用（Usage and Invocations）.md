@@ -18,12 +18,14 @@ python -m pytest [...]
 退出码 5：没有收集到测试用例。
 ```
 ## 2.3 获取版本、名字选项，环境变量
+***
 ```
 pytest --version   # shows where pytest was imported from
 pytest --fixtures  # show available builtin function arguments
 pytest -h | --help # show help on command line and config file options
 ```
 ## 2.4 在第几个失败时停止
+***
 
 在出现第一个失败或者第N个失败时停止测试：
 ```
@@ -31,6 +33,7 @@ pytest -x            # stop after first failure
 pytest --maxfail=2    # stop after two failures
 ```
 ## 2.5 指定测试、选择测试
+***
 
 pytest支持以下几种方式去执行和选择测试:  
 
@@ -76,6 +79,7 @@ pytest --pyargs pkg.testing
 上面命令将会导入pkg.testing，使用它的文件系统所在的位置寻找并运行测试。
 
 ## 2.6 改造Python打印记录
+***
 
 列子： 
 ```
@@ -136,6 +140,7 @@ collected 0 items
 ```
 
 ## 2.8 测试失败时切换到Python调试器（PDB）
+***
 
 Python内置了一个调试器叫[PDB](https://docs.python.org/3/library/pdb.html)。pytest允许通过命令行模式进入PDB。
 ```
@@ -160,6 +165,7 @@ AssertionError('assert result == "ok"',)
 ```
 
 ## 2.9 在测试开始的时候就进入PDB（Python调试器）
+***
 pytest在每次测试开始的时候立即进入PDB模式：
 ```
 pytest --trace
@@ -167,13 +173,14 @@ pytest --trace
 上面的参数会在每个测试用例开始的时候调用Python调试器。
 
 ## 2.10 设置断点
+***
 在本地脚本里import pdb，然后设置断点，pdb.set_trace()在代码里可以被调用，pytest会自动禁用该测试的输出捕获：
 
 ※ 其他测试中的输出捕获不受影响。
 ※ 任何已经被捕获的测试输出以及将要被这样处理。
 ※ 在同一个测试中生成的任何后续输出都不会被捕获，而是直接发送给sys.stdout。需要注意的是，即使在退出交互式PDB模式后，继续执行的常规测试的输出也会发送给sys.stdout。
-## 2.11 内置断点的使用
-
+## 2.11 内置断点的使用 
+***
 Python在版本3.7引入内置的breakpoint()功能。Pytest支持在以下行为中使用breakpoint()：  
 ※ 当调用breakpoint()并且把PYTHONBREAKPOINT设置为默认值的时候，pytest将会使用定制的PDB记录UI，而不是系统默认的PDB。  
 ※ 当测试完成后，系统将会默认的回到系统之前的PDB记录UI。  
@@ -181,7 +188,7 @@ Python在版本3.7引入内置的breakpoint()功能。Pytest支持在以下行�
 ※ 当使用参数 --pdbcls 的时候，一旦测试失败则调试类就会被执行。但是，当breakpoint()在测试用例内部调用的时候，定制的调试类将会被实例化。  
 
 ## 2.12 分析测试执行时长
-
+***
 获取执行时间最长的10个测试用例：
 ```
 pytest --durations=10
@@ -189,6 +196,7 @@ pytest --durations=10
 Pytest默认不展示执行时间太短（<0.01s）的测试用例，除非加上参数 -vv。
 
 ## 2.13 创建JUnitXML格式的文件
+***
 
 2.13.1 生成的结果文件可以被Jenkins或者其他的持续集成工具读取，用法：
 ```
@@ -348,6 +356,7 @@ class TestMe(object):
 add_global_property是一个实验性的特性，在未来的版本中，它的接口可能会被更强大更通用的东西所取代。然而，功能本身将被保留。  
 ```
 ## 2.14 生产结果文件  
+***
 
 从版本3.0开始弃用，--resultlog 很少被使用，安排在4.0中移除。  
 
@@ -361,6 +370,7 @@ pytest --resultlog=path
 ```
 并查看路径位置的内容。例如，经过几个版本的修订，[PyPy-test](http://buildbot.pypy.org/summary) 网页使用这些文件来显示测试结果。
 ## 2.15 向在线的pastebin服务器发送测试报告
+***
 2.15.1 为每个失败的测试用例创建URL：
 ```
 pytest --pastebin=failed
@@ -372,4 +382,4 @@ pytest --pastebin=failed
 ```
 pytest --pastebin=all
 ```
-目前只在http://bpaste.net的服务上实现了粘贴。
+目前只在http://bpaste.net 的服务上实现了粘贴。
