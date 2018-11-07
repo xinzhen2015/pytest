@@ -207,7 +207,7 @@ junit_suite_name = my_suite
 
 版本2.8更新。
 
-在版本3.5里有更改，夹具名从record_xml_property改为record_property，并且作为用户属性所有的报告都可以访问。record_xml_property已经被弃用了。
+在版本3.5里有更改，夹具名从record_xml_property改为record_property，并且作为用户属性所有的报告都可以访问。record_xml_property已经被弃用了。  
 如果你想获得测试额外的log信息，你可以使用record_property夹具：
 ```python
 def test_function(record_property):
