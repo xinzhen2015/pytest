@@ -223,9 +223,8 @@ def test_function(record_property):
 </testcase>
 ```
 或者，你也可以将此功能与自定义标记集成:
-```
+```python
 # content of conftest.py
-
 
 def pytest_collection_modifyitems(session, config, items):
     for item in items:
@@ -233,3 +232,41 @@ def pytest_collection_modifyitems(session, config, items):
             test_id = marker.args[0]
             item.user_properties.append(("test_id", test_id))
 ```
+如下：  
+```python
+# content of test_function.py
+import pytest
+
+
+@pytest.mark.test_id(1501)
+def test_function():
+    assert True
+```
+将会导致：
+```
+<testcase classname="test_function" file="test_function.py" line="0" name="test_function" time="0.0009">
+  <properties>
+    <property name="test_id" value="1501" />
+  </properties>
+</testcase>
+```
+警告：
+```
+record_property是一个实验性的特性，将来可能会更改。  
+另外请注意，使用此特性将打断任何模式的测试。当与一些CI服务一起使用时，会是个麻烦的问题。
+```
+2.13.3 record_xml_attribute  
+
+版本3.4更新  
+
+要向testcase元素添加额外的xml属性，可以使用record_xml_attribute夹具。  
+
+也可以用来覆盖现有的值:  
+```python
+def test_function(record_xml_attribute):
+    record_xml_attribute("assertions", "REQ-1234")
+    record_xml_attribute("classname", "custom_classname")
+    print("hello world")
+    assert True
+```
+
