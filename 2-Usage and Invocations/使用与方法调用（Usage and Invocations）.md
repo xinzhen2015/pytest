@@ -361,3 +361,15 @@ pytest --resultlog=path
 ```
 并查看路径位置的内容。例如，经过几个版本的修订，[PyPy-test](http://buildbot.pypy.org/summary) 网页使用这些文件来显示测试结果。
 ## 2.15 向在线的pastebin服务器发送测试报告
+2.15.1 为每个失败的测试用例创建URL：
+```
+pytest --pastebin=failed
+```
+这将向远程粘贴服务提交测试运行信息，并为每次失败提供一个URL。如果您只想发送一个特定的失败，您可以像往常一样选择测试或者添加-x。
+
+2.15.2 为全部测试用例的log创建URL
+
+```
+pytest --pastebin=all
+```
+目前只在http://bpaste.net的服务上实现了粘贴。
