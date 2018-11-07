@@ -383,3 +383,30 @@ pytest --pastebin=failed
 pytest --pastebin=all
 ```
 目前只在http://bpaste.net 的服务上实现了粘贴。
+## 2.16 禁用pytest插件
+***
+```
+pytest -p no:doctest
+```
+## 2.17 在Python代码里调用pytest
+***
+在版本2.0里更新
+
+你可以在Python代码里直接调用pytest：
+```python
+pytest.main()
+```
+这就好像从命令行调用“pytest”。它不会引发SystemExit，而是返回exitcode。你可以传递选项和参数:
+```
+pytest.main(['-x', 'mytestdir'])
+```
+你可以向pytest.main指定额外的插件：
+```python
+# content of myinvoke.py
+import pytest
+class MyPlugin(object):
+    def pytest_sessionfinish(self):
+        print("*** test run reporting finishing")
+
+pytest.main(["-qq"], plugins=[MyPlugin()])
+```
