@@ -360,3 +360,4 @@ add_global_property是一个实验性的特性，在未来的版本中，它的�
 pytest --resultlog=path
 ```
 并查看路径位置的内容。例如，经过几个版本的修订，[PyPy-test](http://buildbot.pypy.org/summary) 网页使用这些文件来显示测试结果。
+## 2.15 向在线的pastebin服务器发送测试报告
